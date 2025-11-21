@@ -1,0 +1,5 @@
+{
+  "name": "Gestor Cerveja Pro",
+  "description": "Aplicação simples e moderna para gestão de vendas de cerveja, controle de vasilhames, kilapis (dívidas) e consultoria de crescimento via IA.",
+  "requestFramePermissions": []
+}
