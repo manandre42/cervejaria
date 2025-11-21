@@ -15,12 +15,13 @@ import { Transaction, Client } from "../types";
 // --- CONFIGURAÇÃO DO FIREBASE ---
 // Substitua os valores abaixo pelos do seu projeto no Firebase Console
 const firebaseConfig = {
-  apiKey: "API_KEY_AQUI",
-  authDomain: "seunegocio.firebaseapp.com",
-  projectId: "seunegocio",
-  storageBucket: "seunegocio.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef"
+  apiKey: "AIzaSyAQJ3o5I6Qg7X7XvUcLxuc0ReiRHML_Iao",
+  authDomain: "cervejaria-53789.firebaseapp.com",
+  projectId: "cervejaria-53789",
+  storageBucket: "cervejaria-53789.firebasestorage.app",
+  messagingSenderId: "414646788570",
+  appId: "1:414646788570:web:6bb719f703c01e376d60e3",
+  measurementId: "G-D89MKWKSY3"
 };
 
 // Inicialização condicional para evitar erros se a config não estiver preenchida
