@@ -1,14 +1,15 @@
 import { initializeApp } from "firebase/app";
-import { 
-  getFirestore, 
-  collection, 
-  addDoc, 
-  updateDoc, 
-  doc, 
-  onSnapshot, 
-  query, 
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  onSnapshot,
+  query,
   orderBy,
-  setDoc
+  setDoc,
+  enableIndexedDbPersistence,
 } from "firebase/firestore";
 import { Transaction, Client } from "../types";
 
@@ -21,7 +22,7 @@ const firebaseConfig = {
   storageBucket: "cervejaria-53789.firebasestorage.app",
   messagingSenderId: "414646788570",
   appId: "1:414646788570:web:6bb719f703c01e376d60e3",
-  measurementId: "G-D89MKWKSY3"
+  measurementId: "G-D89MKWKSY3",
 };
 
 // Inicialização condicional para evitar erros se a config não estiver preenchida
@@ -34,7 +35,13 @@ try {
     db = getFirestore(app);
     console.log("Firebase conectado com sucesso.");
   } else {
-    console.warn("Firebase não configurado. Usando modo Offline (LocalStorage).");
+    console.warn(
+      "Firebase não configurado. Usando modo Offline (LocalStorage)."
+    );
+    enableIndexedDbPersistence(db).catch((err) => {
+      // Erros comuns: multiple tabs (failed-precondition) ou browser sem suporte
+      console.warn("IndexedDB persistence não disponível:", err);
+    });
   }
 } catch (e) {
   console.error("Erro ao inicializar Firebase:", e);
@@ -50,13 +57,16 @@ export const firebaseService = {
   // --- TRANSAÇÕES ---
   subscribeTransactions: (callback: (data: Transaction[]) => void) => {
     if (!db) return () => {};
-    
+
     const q = query(collection(db, TRANS_COLLECTION), orderBy("date", "desc"));
     return onSnapshot(q, (snapshot) => {
-      const transactions = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as Transaction));
+      const transactions = snapshot.docs.map(
+        (doc) =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          } as Transaction)
+      );
       callback(transactions);
     });
   },
@@ -74,10 +84,13 @@ export const firebaseService = {
 
     const q = collection(db, CLIENTS_COLLECTION);
     return onSnapshot(q, (snapshot) => {
-      const clients = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      } as Client));
+      const clients = snapshot.docs.map(
+        (doc) =>
+          ({
+            id: doc.id,
+            ...doc.data(),
+          } as Client)
+      );
       callback(clients);
     });
   },
@@ -95,5 +108,5 @@ export const firebaseService = {
     const clientRef = doc(db, CLIENTS_COLLECTION, client.id);
     const { id, ...data } = client; // Não salvamos o ID dentro do documento se não quisermos duplicidade
     await updateDoc(clientRef, data as any);
-  }
+  },
 };

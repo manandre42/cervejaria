@@ -14,7 +14,7 @@ export const TransactionList: React.FC<TransactionListProps> = ({ transactions, 
     return (
         <div className="animate-fade-in">
             <div className="flex items-center gap-4 mb-6">
-                <button onClick={onBack} className="text-slate-500 hover:text-brand-600">← Voltar</button>
+                <button onClick={onBack} className="text-slate-500 hover:text-brand-600">←</button>
                 <h2 className="text-2xl font-bold text-brand-900">Histórico de Transações</h2>
             </div>
             <div className="bg-white rounded-lg shadow overflow-hidden">
