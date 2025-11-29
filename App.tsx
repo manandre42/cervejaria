@@ -15,6 +15,7 @@ import { Dashboard } from './components/Dashboard';
 import { Clients } from './components/Clients';
 import { TransactionList } from './components/TransactionList';
 import { TransactionModal } from './components/TransactionModal';
+import { InstallButton } from './components/InstallButton';
 import { SplashScreen, LoginScreen } from './components/Auth';
 import { InvestmentTipsCarousel } from './components/InvestmentTipsCarousel';
 
@@ -300,6 +301,9 @@ const App: React.FC = () => {
         onSubmit={handleTransactionSubmit}
         onAddDebt={handleDebtSubmit}
       />
+
+           {/* Botão de instalação */}
+      <InstallButton />
     </div>
   );
 };
