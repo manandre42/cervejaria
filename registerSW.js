@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/gestor-cerveja-pro/sw.js', { scope: '/gestor-cerveja-pro/' })})}
